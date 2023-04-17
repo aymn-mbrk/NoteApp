@@ -1,11 +1,15 @@
-FROM ubuntu:20.04
-ENV DEBIAN_FRONTEND=noninteractive
+FROM ubuntu
 
-RUN apt-get update
-RUN apt install -y apache2 apache2-utils python pip
+RUN apt update
 
-RUN apt clean 
+RUN apt upgrade -y
+
+RUN apt install -y apache2
+
+RUN apt install -y apache2-utils
+
+RUN apt clean
 
 EXPOSE 80
 
-CMD [“apache2ctl”, “-D”, “FOREGROUND”]
+CMD ["apache2ctl", "-D", "FOREGROUND"]
