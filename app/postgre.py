@@ -4,8 +4,21 @@ from datetime import datetime
 from sqlalchemy_utils import database_exists, create_database
 from config import url
 
+import os
+import socket
+
+username = 'hime' #os.environ.get('POSTGRES_USER')
+pwd = 'hime' #os.environ.get('POSTGRES_PASSWORD')
+database = 'note' #os.environ.get("POSTGRE_DB")
+
+port_id = 5432
+
+postgres_host = 'db'
+ip_address = socket.gethostbyname(postgres_host)
+
+
 Base = declarative_base()
-#url= 'postgresql://postgres:hassan@localhost:5432/Employee'
+url= f'postgresql://{username}:{pwd}@{ip_address}:{port_id}/{database}'
 engine = create_engine(f'{url}', echo=True)
 Session = sessionmaker()
 

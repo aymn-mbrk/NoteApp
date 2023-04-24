@@ -1,9 +1,12 @@
 import os
+import socket
 
-hostname = os.environ.get('HOSTNAMEPOSTGRE')
-database = os.environ.get('POSTGRES_DB')
-username= os.environ.get('POSTGRES_USER')
-pwd = os.environ.get('POSTGRES_PASSWORD')
+postgres_host = "db"
+ip_address = socket.gethostbyname(postgres_host)
+
+username= 'hime' #os.environ.get('POSTGRES_USER')
+pwd = 'hime' #os.environ.get('POSTGRES_PASSWORD')
+database = 'note' #os.environ.get('POSTGRES_DB')
 port_id = 5432
 
-url= f'postgresql://{username}:{pwd}@{hostname}:{port_id}/{database}'
+url= f'postgresql://{username}:{pwd}@{ip_address}:{port_id}/{database}'

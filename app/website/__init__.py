@@ -3,13 +3,21 @@ from flask_sqlalchemy import SQLAlchemy  # Changer pour PostgreSQL
 from os import path
 from flask_login import LoginManager 
 from postgre import engine, Session
+import os, socket
 
+username = 'hime' #os.environ.get('POSTGRES_USER')
+pwd = 'hime' #os.environ.get('POSTGRES_PASSWORD')
+database = 'note' #os.environ.get("POSTGRE_DB")
+port_id = 5432
+
+postgres_host = 'db'
+ip_address = socket.gethostbyname(postgres_host)
 
 db = SQLAlchemy()
 
 
 locale_session = Session(bind=engine)
-url= 'postgresql://postgres:hassan@localhost:5432/Employee'
+url= f'postgresql://{username}:{pwd}@{ip_address}:{port_id}/{database}'
 
 def create_app():
     app = Flask(__name__) # App initialization
