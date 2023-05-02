@@ -1,0 +1,45 @@
+---
+version: '3'
+services:
+  web:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    ports:
+       - "80:80"
+    depends_on:
+       - "db"
+    networks:
+        webapp:
+          ipv4_address: 172.18.0.2
+
+
+  db:
+    image: "postgres"
+    restart: always
+      #env_file:
+      #- ./.env
+    environment:
+      POSTGRES_USER: hime
+      POSTGRES_PASSWORD: hime
+      POSTGRES_DB: note
+    ports:
+      - "5432:5432"
+    volumes: 
+      - ./db:/var/lib/postgresql/data #Le / après le point
+    networks:
+        webapp:
+          ipv4_address: 172.18.0.3
+
+networks:
+    webapp:
+      driver: "bridge"
+      ipam:
+        driver: default
+        config:
+          - subnet: "172.18.0.0/24"
+            gateway: "172.18.0.1"
+
+volumes:
+  db:
+    external: true
