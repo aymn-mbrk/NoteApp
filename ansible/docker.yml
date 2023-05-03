@@ -1,0 +1,77 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: false
+  tasks:
+    - name: Install docker packages
+      apt:
+        name: ['apt-transport-https', 'ca-certificates', 'curl', 'gnupg2', 'software-properties-common', 'python3-pip', 'python3-setuptools']
+        state: present
+        update_cache: yes
+      tags:
+        - docker
+
+    - name: Add Docker s GPG key for ubuntu from official site
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+      tags:
+        - docker
+
+    - name: Configure Docker for ubuntu stable repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+        update_cache: yes
+      tags:
+        - docker
+
+    - name: Installer Docker
+      apt:
+        name: docker-ce
+        state: present
+      tags:
+        - docker
+
+    - name: Install Docker Python module
+      pip:
+        name: docker
+        state: present
+      tags:
+        - docker
+
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+      tags:
+        - docker
+
+    - name: Installer Docker
+      apt:
+        name: docker-ce
+        state: present
+      tags:
+        - docker
+
+    - name: Démarrer et activer le service Docker
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+      tags:
+        - docker
+
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+
+    - name: Installer Git
+      apt:
+        name: git
+        state: present
+
+    - name: Install pip3
+      apt:
+        name: python3-pip
+        state: present
+
