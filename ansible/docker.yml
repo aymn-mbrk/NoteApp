@@ -75,3 +75,14 @@
         name: python3-pip
         state: present
 
+    - name: Clone a github repository
+      git:
+        repo: https://github.com/HimeYN/NoteApp
+        dest: /home/ubuntu/NoteApp
+
+    - name: Create and start services
+      community.docker.docker_compose:
+        project_src: NoteApp
+        files: docker-compose.yml
+
+
