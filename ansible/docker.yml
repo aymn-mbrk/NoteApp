@@ -74,15 +74,24 @@
       apt:
         name: python3-pip
         state: present
-
-    - name: Clone a github repository
+  
+    - name: Copier dockerfile
       git:
-        repo: https://github.com/HimeYN/NoteApp
+        repo: https://github.com/HimeYN/NoteApp.git
         dest: /home/ubuntu/NoteApp
+        version: Production
 
-    - name: Create and start services
-      community.docker.docker_compose:
-        project_src: NoteApp
-        files: docker-compose.yml
+    - name: Installer Docker Compose
+      pip:
+        name: docker-compose
+        state: present
+    
+    - name: Créer le volume
+      docker_volume:
+        name: db
+        state: present
 
-
+    - name: Lancer Docker Compose
+      docker_compose:
+        project_src: /home/ubuntu/NoteApp/
+        state: present
