@@ -91,7 +91,18 @@
         name: db
         state: present
 
+          #- name: Lancer Docker Compose
+          #docker_compose:
+          #project_src: /home/ubuntu/NoteApp/
+          #state: present
+
+    - name: Run Docker Compose build with BuildKit
+      command:
+        cmd: docker-compose build --build-arg DOCKER_BUILDKIT=1
+        chdir: /home/ubuntu/NoteApp/
+
     - name: Lancer Docker Compose
       docker_compose:
         project_src: /home/ubuntu/NoteApp/
         state: present
+
