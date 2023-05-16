@@ -16,7 +16,7 @@ pipeline {
     }   
 
     stage('Deploiement') {
-      agent { node { label 'ansible'} }
+      agent { node { label 'myagent'} }
       environment {
         // Définit les variables d'environnement pour l'utilisateur distant et les informations d'authentification SSH
         remoteUser = 'ubuntu'
